@@ -1,0 +1,33 @@
+resources:
+  jobs:
+    captsone_job:
+      name: captsone job
+      tasks:
+        - task_key: bronze
+          notebook_task:
+            notebook_path: /Workspace/capstone_project/capstone_project_cyntexa/capstone_bundle/src/bronze/ingestion
+            base_parameters:
+              catalog: ${var.catalog}
+            source: WORKSPACE
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          notebook_task:
+            notebook_path: /Workspace/capstone_project/capstone_project_cyntexa/capstone_bundle/src/silver/customer_scd_type2
+            base_parameters:
+              catalog: ${var.catalog}
+            source: WORKSPACE
+        - task_key: gold
+          depends_on:
+            - task_key: silver
+          notebook_task:
+            notebook_path: /Workspace/capstone_project/capstone_project_cyntexa/capstone_bundle/src/gold/trend_analysis
+            base_parameters:
+              catalog: ${var.catalog}
+            source: WORKSPACE
+      queue:
+        enabled: true
+      parameters:
+        - name: catalog
+          default: ${var.catalog}
+      performance_target: PERFORMANCE_OPTIMIZED

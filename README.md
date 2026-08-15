@@ -1,4 +1,4 @@
-# 🚀 Cyntexa Capstone Project
+# 🚀 Capstone Project
 
 This project is a **Data Engineering project built using Databricks**.
 
